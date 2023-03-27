@@ -363,23 +363,46 @@ pre code {
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting
-syntax for authoring HTML, PDF, and MS Word documents. For more details
-on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be
-generated that includes both content as well as the output of any
-embedded R code chunks within the document. You can embed an R code
-chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Welcome to week 1 of the Bioinformatics Working Group. My goal for
+this first meetup is to cover: - some SciNet Basics - An introdcution to
+R/Rstudio - Demonstrate the utility of ChatGPT for learning</p>
+</div>
+<div id="scinet-what-is-it-and-how-to-get-started" class="section level1">
+<h1>SciNet: What is it and how to get started</h1>
+<p>SciNet is the term applied to the high performance computing cluster
+that the USDA has spent a significant amount of money developing.</p>
+<p>It consists of two separate but connected clusters: - Ceres - located
+in Ames Iowa - Atlas - located in Starkville Mississippi</p>
+<p>I primarily use Ceres. There are some subtle differences between the
+inner workings of Ceres and Atlas but in large part they are similar and
+differences are well documented.</p>
+<p>All SciNet documents can be found at: <a href="https://scinet.usda.gov/" class="uri">https://scinet.usda.gov/</a></p>
+<div id="who-can-use-scinet" class="section level2">
+<h2>Who can use SciNet?</h2>
+<p>The short answer is everyone. SciNet does not requrie USDA
+credentials and so it is already available for everyone in this room.
+However, if you do not have a USDA email address the access must be
+requested by your collaborator or SY.</p>
+<p>The link to request an account can be found here: <a href="https://scinet.usda.gov/about/signup" class="uri">https://scinet.usda.gov/about/signup</a></p>
+</div>
+<div id="how-should-i-log-in-to-scinet" class="section level2">
+<h2>How should I log in to SciNet?</h2>
+<p>The answer is a program called Putty… and you will need local IT to
+install it.</p>
+</div>
+<div id="why-should-you-use-scinet" class="section level2">
+<h2>Why should you use SciNet?</h2>
+<p>In general, SciNet provides a computational space for us all to work
+without the need for IT staff to install and direct our software usage.
+This means that anything you want to accomplish is possible as long as
+you have the know-how. SciNet also comes with a ton of pre-installed
+programs that are common to bioinformatics. Examples: ncbi-blast+ (for
+blasting) samtools (for sequence alignment files) bcftools (variant
+calling and manipulation) bedtools (the swiss army knife of genomics)
+seqtk (sequence manipulations) GATK (variant calling) mummer (whole
+genome alignment) spades (short read genome assembler)</p>
 </div>
 <div id="including-plots" class="section level2">
 <h2>Including Plots</h2>
@@ -388,6 +411,7 @@ chunk like this:</p>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the
 code chunk to prevent printing of the R code that generated the
 plot.</p>
+</div>
 </div>
 
 
