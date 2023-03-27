@@ -55,16 +55,102 @@ comes with a ton of pre-installed programs that are common to bioinformatics.
     mummer (whole genome alignment)
     spades (short read genome assembler)
 
+# Moving over to R and Rstudio
+R is my prefered language for data science given the large community of 
+developers and the ease of reading the code. It is highly flexible and scaleable. 
 
+## Install
+You will need the help of IT to install R and Rstudio...
 
+## Getting data into Rstudio so that you can explore
+As scientist we tend to store data in excel sheets in ever more complex formats
+as we work to make sense of the data. I'd like to present an alternative to this
+in the form of Tidy data so that we can maintain a consistent data format yet 
+have the flexibility to interogate data. 
 
+If you want to get into the deep end of the pool with R and data science 
+check out: https://r4ds.had.co.nz/
 
-## Including Plots
+But before we get to data lets get setup in R.
+
+## Setup: Libraries
+One of the best parts of R is that it comes with a mechanism to install other 
+folks perbuilt software and these are usually refered to as 'packages' or 'libriaries'.
+As an example, the library 'tidyverse' is a composite package of many data science
+softwares. 
+
+To install a library and load it into your working environment:
+```{r}
+#if the library is not installed run:
+#install.packages(tidyverse)
+#load the installed library:
+library(tidyverse)
+library(janitor)
+library(plotly)
+```
+## Setup: data
+Often loading data into R is the first issue folks need to overcome. It's not an
+intuitive process but once practiced becomes second nature. 
+
+First and foremost you need to set a working directory or at least check that you
+are in the right place. 
+
+```{r}
+###command to figure out where you are
+#getwd()
+###command to set a new location
+#setwd()
+```
+There are numerous functions to read in data but in general the three most common 
+will be read.csv() read.table() and read.excel(). Bear in mind that read.excel comes
+from the package readxl that would need to be installed and loaded as shown previously.
+I typically work with csv and txt files so read.csv() is my go to. 
+
+I've set up some weather data that we will quickly take a look at.
+
+```{r}
+#read in the file and label it as "Fargo2022"
+Fargo2022 <- read.csv(file = "data/NDAWN_23_2022.csv")
+#view the top of the data
+head(Fargo2022)
+```
+
+## Tidy data
+Simply put, tidy data refers to structuring data so that each observation is 
+in a row, each variable to track is in a column, and values are stored at the 
+intersection of rows and columns. 
+
+Is the data we loaded up Tidy?
+
+```{r}
+#adding a few options to improve the data and make it Tidy
+Fargo2022 <- read.csv(file = "data/NDAWN_23_2022.csv", skip = 1, sep = ",", header = T, row.names = 1)
+#quick check data
+head(Fargo2022)
+```
+```{r}
+Fargo2022 <- clean_names(Fargo2022)
+Fargo2022 <- filter(Fargo2022, date != "Date")
+as.data.frame(sapply(Fargo2022,class))
+Fargo2022$date <- lubridate::dmy(Fargo2022$date)
+head(Fargo2022)
+```
+
+## Now that we have Tidy data we can start generating some summary plots
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r, echo=FALSE}
+January2022 <- Fargo2022 %>% filter(date < '2022-02-01')
+
+Jplot <- January2022 %>% group_by(date) %>%
+  summarise(mean_temp = mean(as.numeric(avg_air_temp_f))) %>%
+  ggplot(aes(x = date, y = mean_temp)) +
+  geom_point() +
+  geom_line()
+
+ggplotly(Jplot)
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
