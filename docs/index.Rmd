@@ -80,12 +80,13 @@ As an example, the library 'tidyverse' is a composite package of many data scien
 softwares. 
 
 To install a library and load it into your working environment:
-```{r}
+```{r, include=FALSE}
 #if the library is not installed run:
 #install.packages(tidyverse)
 #load the installed library:
 library(tidyverse)
 library(janitor)
+library(rmarkdown)
 library(plotly)
 ```
 ## Setup: data
@@ -97,7 +98,7 @@ are in the right place.
 
 ```{r}
 ###command to figure out where you are
-#getwd()
+getwd()
 ###command to set a new location
 #setwd()
 ```
@@ -112,7 +113,7 @@ I've set up some weather data that we will quickly take a look at.
 #read in the file and label it as "Fargo2022"
 Fargo2022 <- read.csv(file = "data/NDAWN_23_2022.csv")
 #view the top of the data
-head(Fargo2022)
+paged_table(Fargo2022[1:10,1:10])
 ```
 
 ## Tidy data
@@ -126,14 +127,15 @@ Is the data we loaded up Tidy?
 #adding a few options to improve the data and make it Tidy
 Fargo2022 <- read.csv(file = "data/NDAWN_23_2022.csv", skip = 1, sep = ",", header = T, row.names = 1)
 #quick check data
-head(Fargo2022)
+paged_table(Fargo2022[1:5,1:5])
 ```
 ```{r}
-Fargo2022 <- clean_names(Fargo2022)
 Fargo2022 <- filter(Fargo2022, date != "Date")
 as.data.frame(sapply(Fargo2022,class))
-Fargo2022$date <- lubridate::dmy(Fargo2022$date)
-head(Fargo2022)
+Fargo2022$Date <- lubridate::ymd(Fargo2022$Date)
+as.data.frame(sapply(Fargo2022,class))
+Fargo2022 <- clean_names(Fargo2022)
+paged_table(Fargo2022[1:5,1:5])
 ```
 
 ## Now that we have Tidy data we can start generating some summary plots
@@ -142,6 +144,7 @@ You can also embed plots, for example:
 
 ```{r, echo=FALSE}
 January2022 <- Fargo2022 %>% filter(date < '2022-02-01')
+paged_table(January2022)
 
 Jplot <- January2022 %>% group_by(date) %>%
   summarise(mean_temp = mean(as.numeric(avg_air_temp_f))) %>%
